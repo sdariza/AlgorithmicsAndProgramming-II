@@ -15,135 +15,11 @@ public class Main extends javax.swing.JFrame {
 
     int numUsers = 0;
     String data[][] = new String[100][8];
+    
+    Method myMethods = new Method();
+    
+    GradeBySemester gbs = new GradeBySemester();
 
-    /**
-     *
-     * @param string
-     * @return
-     */
-    public static boolean integerValidator(String string) {
-        int tam = string.length(), i = 0;
-        boolean sw = true;
-        while (i < tam && sw) {
-            String h = string.substring(i, i + 1);
-            if (h.equals("0") || h.equals("1") || h.equals("2") || h.equals("3")
-                    || h.equals("4") || h.equals("5") || h.equals("6") || h.equals("7")
-                    || h.equals("8") || h.equals("9")) {
-                i++;
-            } else {
-                sw = false;
-            }
-        }
-        return sw;
-    }
-
-    /**
-     *
-     * @param string
-     * @param tam
-     * @return
-     */
-    public static int dotCount(String string, int tam) {
-        int cont = 0, i = 0;
-        while (i < tam && cont <= 1) {
-            String h = string.substring(i, i + 1);
-            if (h.equals(".")) {
-                cont++;
-            }
-            i++;
-        }
-        return cont;
-    }
-
-    public static boolean floatValidator(String string, int tam) {
-        if (tam < 3 || tam >= 5) {
-            return false;
-        }
-        int dotCount = dotCount(string, tam);
-        if (dotCount > 1 || dotCount == 0) {
-            return false;
-        }
-        String izq = string.substring(0, 1);
-        String der;
-        if (tam == 3) {
-            der = string.substring(2, 3);
-        } else {
-            der = string.substring(2, 4);
-        }
-        if (integerValidator(izq) && integerValidator(der)) {
-            if (Integer.parseInt(izq) > 5 || (Integer.parseInt(izq) == 5 && Integer.parseInt(der) != 0)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static boolean idValidator(String string, int tam) {
-        if (tam != 8) {
-            return false;
-        }
-        return integerValidator(string);
-    }
-
-    /**
-     * Calcule min length between 2 Strings
-     *
-     * @param cad1: string
-     * @param cad2: String
-     * @return min lenght between cad1 and cad2
-     */
-    public static int minLength(String cad1, String cad2) {
-        if (cad1.length() > cad2.length()) {
-            return cad2.length();
-        } else if (cad2.length() > cad1.length()) {
-            return cad1.length();
-        }
-        return cad1.length();
-    }
-
-    public static int compareTo(String cad1, String cad2) {
-        int minLength = minLength(cad1, cad2);
-        cad1 = cad1.toLowerCase();
-        cad2 = cad2.toLowerCase();
-        boolean sw = false;
-        int i = 0, diff = 0;
-        while (!sw && i < minLength) {
-            if (cad1.charAt(i) != cad2.charAt(i)) {
-                sw = true;
-                diff = (int) cad1.charAt(i) - (int) cad2.charAt(i);
-            } else {
-                i++;
-            }
-        }
-        if (!sw) {
-            diff = cad1.length() - cad2.length();
-        }
-
-        return diff;
-    }
-
-    public static void swapping(String vec[], int pos) {
-        String temp = vec[pos];
-        vec[pos] = vec[pos + 1];
-        vec[pos + 1] = temp;
-    }
-
-    public static void sort(String M[][], int n, int m) {
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (compareTo(M[j][1], M[j + 1][1]) > 0) {
-                    for (int j2 = 0; j2 < m; j2++) {
-                        String temp = M[j][j2];
-                        M[j][j2] = M[j + 1][j2];
-                        M[j + 1][j2] = temp;
-                    }
-                }
-            }
-        }
-    }
 
     public void populateTable() {
         String columnNames[] = {"id", "Primer Apellido", "Primer Nombre", "N1", "N2", "N3", "N4", "N5"};
@@ -213,6 +89,7 @@ public class Main extends javax.swing.JFrame {
         jSeparatorMark5 = new javax.swing.JSeparator();
         jButtonAdd = new javax.swing.JButton();
         jButtonSort = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -424,6 +301,14 @@ public class Main extends javax.swing.JFrame {
         });
         jPanelReg.add(jButtonSort, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, -1, -1));
 
+        jButton1.setText("show GradeBySemester");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jPanelReg.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 520, -1, -1));
+
         jPanelBackground.add(jPanelReg, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 0, 340, 580));
 
         getContentPane().add(jPanelBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 580));
@@ -442,7 +327,7 @@ public class Main extends javax.swing.JFrame {
         String n5 = jTextFieldMark5.getText();
         //JTextField myTextField[] = {jTextFieldCode,jTextFieldCode,jTextFieldCode,jTextFieldCode,jTextFieldCode};
 
-        if (idValidator(id, id.length()) && floatValidator(n1, n1.length()) && floatValidator(n2, n2.length()) && floatValidator(n3, n3.length()) && floatValidator(n4, n4.length()) && floatValidator(n5, n5.length())) {
+        if (myMethods.idValidator(id, id.length()) && myMethods.floatValidator(n1, n1.length()) && myMethods.floatValidator(n2, n2.length()) && myMethods.floatValidator(n3, n3.length()) && myMethods.floatValidator(n4, n4.length()) && myMethods.floatValidator(n5, n5.length())) {
             data[numUsers][0] = id;
             data[numUsers][1] = lName;
             data[numUsers][2] = name;
@@ -474,33 +359,16 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddMouseExited
 
     private void jButtonSortMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSortMousePressed
-        sort(data, numUsers, 8);
+        myMethods.sort(data, numUsers, 8);
         populateTable();
     }//GEN-LAST:event_jButtonSortMousePressed
 
     private void jTextFieldCodeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodeKeyReleased
-        // TODO add your handling code here:
-        if (jTextFieldCode.getText().length() == 0) {
-            jLabelCode.setText("Ingrese el código del estudiante");
-            jLabelCode.setVisible(true);
-
-        } else {
-            jLabelCode.setVisible(false);
-            jTextFieldCode.setForeground(Color.black);
-        }
-
+        myMethods.showLabel(jTextFieldCode, jLabelCode);
     }//GEN-LAST:event_jTextFieldCodeKeyReleased
 
     private void jTextFieldLNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldLNameKeyReleased
-
-        if (jTextFieldLName.getText().length() == 0) {
-            jLabelLName.setText("Ingrese el primer apellido");
-            jLabelLName.setVisible(true);
-
-        } else {
-            jLabelLName.setVisible(false);
-            jTextFieldLName.setForeground(Color.black);
-        }
+        myMethods.showLabel(jTextFieldName, jLabelName);
     }//GEN-LAST:event_jTextFieldLNameKeyReleased
 
     private void jTextFieldNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNameKeyReleased
@@ -551,6 +419,10 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextFieldMark3KeyReleased
 
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        gbs.setVisible(true);
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -595,6 +467,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonSort;
     private javax.swing.JLabel jLabelCode;
