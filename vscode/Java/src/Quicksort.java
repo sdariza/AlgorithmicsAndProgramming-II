@@ -8,7 +8,7 @@ public class Quicksort {
      * @return posición del menor elemento que el pivote
      */
     public static int rightMove(int v[], int i, int p) {
-        if (v[i] < v[p]) // mq(v[i]<v[p])
+        if (v[i] < p) // mq(v[i]<v[p])
             return rightMove(v, i + 1, p);
         return i;
     }
@@ -22,7 +22,7 @@ public class Quicksort {
      * @return posición del mayor elemento que el pivote
      */
     public static int leftMove(int v[], int j, int p) {
-        if (v[j] > v[p]) // mq(v[j] > v[p])
+        if (v[j] > p) // mq(v[j] > v[p])
             return leftMove(v, j - 1, p);
         return j;
     }
@@ -50,7 +50,7 @@ public class Quicksort {
 
     public static void quickSort(int v[], int first, int last) {
         if (first < last) { // mq(pueda particionar)
-            int i = first, j = last, p = (first + last) / 2;
+            int i = first, j = last, p = v[(first + last) / 2];
             i = rightMove(v, i, p); // busco la posición a izq
             j = leftMove(v, j, p); // busco la posición a der
             if (i <= j) { // si están dentro del rango

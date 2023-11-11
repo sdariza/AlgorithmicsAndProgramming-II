@@ -11,23 +11,23 @@ package quicksort;
 public class Method {
 
     public void printVector(int v[], int n) {
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++)
             System.out.print(v[i] + "|");
-        }
+
         System.out.println("");
     }
 
     public int rightMove(int v[], int i, int p) {
-        if (v[i] < v[p]) {
+        if (v[i] < p)
             return rightMove(v, i + 1, p);
-        }
+
         return i;
     }
 
     public int leftMove(int v[], int j, int p) {
-        if (v[j] > v[p]) {
+        if (v[j] > p)
             return leftMove(v, j - 1, p);
-        }
+
         return j;
     }
 
@@ -39,7 +39,7 @@ public class Method {
 
     public void quickSort(int v[], int first, int last) {
         if (first < last) {
-            int i = first, j = last, p = (first + last) / 2;
+            int i = first, j = last, p = v[(first + last) / 2];
             i = rightMove(v, i, p);
             j = leftMove(v, j, p);
             if (i < j) {
@@ -50,6 +50,7 @@ public class Method {
                 i++;
                 j--;
             }
+
             if (first < j) {
                 quickSort(v, first, j);
             }
@@ -58,6 +59,7 @@ public class Method {
             }
 
         }
+
     }
 
 }

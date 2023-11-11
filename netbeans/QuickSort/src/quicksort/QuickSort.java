@@ -14,6 +14,7 @@ public class QuickSort {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+
         Method myMethods = new Method();
         int v[] = {-9999, 9, 8, 7, 61, 5, 4, 3, 21, 10, 11};
         int n = v.length - 1;
@@ -22,6 +23,7 @@ public class QuickSort {
         myMethods.quickSort(v, 1, n);
         System.out.println("Vector ordenado");
         myMethods.printVector(v, n);
+
     }
 
 }
