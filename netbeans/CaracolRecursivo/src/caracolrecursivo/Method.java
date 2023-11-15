@@ -44,7 +44,7 @@ public class Method {
             generarCaracolR(M, n, i - 1, j, k + 1);
         } else if (j > 1 + n / 2 && i == n - j + 2) {//singularidad naranja
             generarCaracolR(M, n, i, j - 1, k + 1);
-        } else {//lamados recursivos más pequeños
+        } else {//llamados recursivos más pequeños
             if (i <= n / 2 && j > i && j <= n - i + 1) {//hacia la izquierda
                 generarCaracolR(M, n, i, j - 1, k + 1);
             } else if (j <= n / 2 && i <= n - j + 1) {//hacia abajo
