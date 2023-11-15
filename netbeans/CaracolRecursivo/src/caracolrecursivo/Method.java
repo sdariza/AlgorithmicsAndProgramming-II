@@ -34,7 +34,7 @@ public class Method {
 
     public void generarCaracolR(int M[][], int n, int i, int j, int k) {
         M[i][j] = k;
-        if (i == 1 + n / 2 && j == 1 + n / 2) {
+        if (i == 1 + n / 2 && j == 1 + n / 2) {//caso base
             M[i][j] = k;
         } else if (i <= n / 2 && j == i) {//singularidad azul oscuro
             generarCaracolR(M, n, i + 1, j, k + 1);
